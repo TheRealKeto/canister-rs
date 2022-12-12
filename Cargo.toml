@@ -1,7 +1,11 @@
 [package]
 name = "canister-rs"
 version = "1.0.0"
+authors = ["TheRealKeto <therealketo@gmail.com>"]
 edition = "2021"
+description = "A POC for an async wrapper for the Canister API"
+repository = "https://github.com/TheRealKeto/canister-rs"
+license = "BSD-3-Clause"
 
 [dependencies]
 reqwest = { version = "0.11.13", features = ["json"] }
