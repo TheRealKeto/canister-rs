@@ -21,7 +21,9 @@ struct CanisterPackage {
     author: Option<String>,
     maintainer: String,
     depiction: Option<String>,
+    #[serde(rename = "nativeDepiction")]
     sileo_depiction: Option<String>,
+    #[serde(rename = "packageIcon")]
     icon_url: Option<String>,
     repository: CanisterPackageRepo,
     color: Option<String>
