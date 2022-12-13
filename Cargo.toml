@@ -8,7 +8,12 @@ repository = "https://github.com/TheRealKeto/canister-rs"
 license = "BSD-3-Clause"
 
 [dependencies]
-reqwest = { version = "0.11.13", features = ["json"] }
+reqwest = { version = "0.11.13", features = ["json", "blocking"], optional = true }
 serde = { version = "1.0.150", features = ["derive"] }
 thiserror = "1.0.37"
-tokio = { version = "1.23.0", features = ["full"] }
+tokio = { version = "1.23.0", features = ["full"], optional = true }
+
+[features]
+default  = ["blocking"]
+async = ["reqwest", "tokio"]
+blocking = ["reqwest/blocking"]
