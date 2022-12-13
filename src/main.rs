@@ -2,37 +2,10 @@
 // Copyright (c) 2022, Keto (TheRealKeto)
 // SPDX-License-Identifier: BSD-3-Clause
 //
-use serde::Deserialize;
 use reqwest::header::USER_AGENT;
 
-#[derive(Debug, Deserialize)]
-struct CanisterAPIResponse {
-    status: String,
-    date: String,
-    message: Option<String>,
-    data: Vec<CanisterPackage>
-}
-
-#[derive(Debug, Deserialize)]
-struct CanisterPackage {
-    identifier: String,
-    name: Option<String>,
-    description: String,
-    author: Option<String>,
-    maintainer: String,
-    depiction: Option<String>,
-    #[serde(rename = "nativeDepiction")]
-    sileo_depiction: Option<String>,
-    #[serde(rename = "packageIcon")]
-    icon_url: Option<String>,
-    repository: CanisterPackageRepo,
-    color: Option<String>
-}
-
-#[derive(Debug, Deserialize)]
-struct CanisterPackageRepo {
-    uri: String
-}
+mod models;
+use models::CanisterAPIResponse;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
