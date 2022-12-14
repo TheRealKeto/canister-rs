@@ -16,7 +16,9 @@ pub enum CanisterAPIError {
     #[error("Failed fetching data")]
     RequestFailed(#[from] reqwest::Error),
     #[error("Bad request: {0}")]
-    BadRequest(&'static str)
+    BadRequest(&'static str),
+    #[error("Not found: {0}")]
+    NotFound(&'static str)
 }
 
 // Model of a Canister client
@@ -27,8 +29,7 @@ pub struct Canister {
 }
 
 // Base URL of all Canister API requests
-// TODO: Migrate to v2 at some point in time
-const BASE_URL: &str = "https://api.canister.me/v1/community";
+const BASE_URL: &str = "https://api.canister.me/v2";
 
 impl Canister {
     // Creates a new instance of the client
@@ -43,7 +44,8 @@ impl Canister {
     // Bad requests are pretty terrible on v1
     fn map_response_err(&self, code: String) -> CanisterAPIError {
         match code.as_str() {
-            "400: Bad Request" => CanisterAPIError::BadRequest("Bad request"),
+            "400 Bad Request" => CanisterAPIError::BadRequest("400: Bad request"),
+            "404 Not Found" => CanisterAPIError::NotFound("404: Not Found"),
             _ => CanisterAPIError::BadRequest("Unknown error")
         }
     }
@@ -56,16 +58,16 @@ impl Canister {
         let request = self.client
             .get(request_url)
             .header(header::USER_AGENT, &self.user_agent)
-            .query(&[("query", query)])
+            .query(&[("q", query)])
             .build()?;
 
         let response: CanisterAPIResponse = self.client
             .execute(request)?
             .json()?;
 
-        match response.status.as_str() {
-            "Successful" => Ok(response),
-            _ => Err(self.map_response_err(response.status))
+        match response.message.as_str() {
+            "200 Successful" => Ok(response),
+            _ => Err(self.map_response_err(response.message))
         }
     }
 
@@ -78,7 +80,7 @@ impl Canister {
         let request = self.client
             .get(request_url)
             .header(header::USER_AGENT, &self.user_agent)
-            .query(&[("query", query)])
+            .query(&[("q", query)])
             .build()?;
 
         let response: CanisterAPIResponse = self.client
@@ -88,7 +90,7 @@ impl Canister {
             .await?;
 
         match response.status.as_str() {
-            "Successful" => Ok(response),
+            "200 Successful" => Ok(response),
             _ => Err(self.map_response_err(response.status))
         }
     }
