@@ -54,13 +54,13 @@ pub struct CanisterPackageRepo {
 #[derive(Debug, Deserialize)]
 pub struct CanisterResponseRefs {
     #[serde(rename = "nextPage")]
-    next_page: String,
+    pub next_page: Option<String>,
     #[serde(rename = "previousPage")]
-    previous_page: String,
+    pub previous_page: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct CanisterPackageRefs {
-    meta: String,
-    repo: String
+    pub meta: String,
+    pub repo: String
 }
