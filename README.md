@@ -22,7 +22,7 @@ use canister_rs::Canister;
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Always make sure to include a user-agent!
     let client = Canister::new("TheRealKeto/canister-rs");
-    let data = client.search_canister("packages/search", "siguza-utils")
+    let data = client.search_canister("jailbreak/package/search", "siguza")
         .await?;
 
     println!("{:#?}", data);
@@ -38,7 +38,7 @@ use canister_rs::Canister;
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Always make sure to include a user-agent!
     let client = Canister::new("TheRealKeto/canister-rs");
-    let data = client.search_canister("packages/search", siguza-utils);
+    let data = client.search_canister("jailbreak/package/search", siguza);
 
     println!("{:#?}", data);
     Ok(())
