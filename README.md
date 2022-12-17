@@ -19,7 +19,7 @@ the crate with cargo.
 use canister_rs::Canister;
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main() -> Result<(), reqwest::Error> {
     // Always make sure to include a user-agent!
     let client = Canister::new("TheRealKeto/canister-rs");
     let data = client.search_canister("jailbreak/package/search", "siguza")
@@ -35,10 +35,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 ```rust
 use canister_rs::Canister;
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+fn main() -> Result<(), reqwest::Error> {
     // Always make sure to include a user-agent!
     let client = Canister::new("TheRealKeto/canister-rs");
-    let data = client.search_canister("jailbreak/package/search", siguza);
+    let data = client.search_canister("jailbreak/package/search", "siguza");
 
     println!("{:#?}", data);
     Ok(())
