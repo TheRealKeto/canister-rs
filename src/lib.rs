@@ -55,14 +55,11 @@ impl Canister {
         &self, endpoint: &str, query: &str
     ) -> Result<CanisterAPIResponse, CanisterAPIError> {
         let request_url = format!("{}/{}", BASE_URL, endpoint);
-        let request = self.client
+        let response: CanisterAPIResponse = self.client
             .get(request_url)
             .header(header::USER_AGENT, &self.user_agent)
             .query(&[("q", query)])
-            .build()?;
-
-        let response: CanisterAPIResponse = self.client
-            .execute(request)?
+            .send()?
             .json()?;
 
         match response.message.as_str() {
@@ -77,21 +74,18 @@ impl Canister {
         &self, endpoint: &str, query: &str
     ) -> Result<CanisterAPIResponse, CanisterAPIError> {
         let request_url = format!("{}/{}", BASE_URL, endpoint);
-        let request = self.client
+        let response: CanisterAPIResponse = self.client
             .get(request_url)
             .header(header::USER_AGENT, &self.user_agent)
             .query(&[("q", query)])
-            .build()?;
-
-        let response: CanisterAPIResponse = self.client
-            .execute(request)
+            .send()
             .await?
             .json()
             .await?;
 
-        match response.status.as_str() {
+        match response.message.as_str() {
             "200 Successful" => Ok(response),
-            _ => Err(self.map_response_err(response.status))
+            _ => Err(self.map_response_err(response.message))
         }
     }
 }
