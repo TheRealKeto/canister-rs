@@ -18,21 +18,24 @@ pub struct CanisterPackage {
     pub package: String,
     #[serde(rename = "isCurrent")]
     pub is_current: bool,
+    #[serde(rename = "repositoryTier")]
+    pub repository_tier: i32,
     #[serde(rename = "repositorySlug")]
     pub repository_slug: String,
     pub price: String,
-    pub tier: i32,
     pub version: String,
     pub architecture: String,
     pub filename: String,
-    pub size: String,
+    pub size: i32,
     #[serde(rename = "sha256")]
-    pub sha_256: String,
+    pub sha_256: Option<String>,
     pub name: Option<String>,
     pub description: String,
     pub author: Option<String>,
     pub maintainer: String,
     pub depiction: Option<String>,
+    #[serde(rename = "nativeDepiction")]
+    pub native_depiction: Option<String>,
     #[serde(rename = "sileoDepiction")]
     pub sileo_depiction: Option<String>,
     pub header: Option<String>,
@@ -40,9 +43,9 @@ pub struct CanisterPackage {
     pub color: Option<String>,
     pub icon: Option<String>,
     pub section: String,
-    pub tag: Vec<String>,
+    pub tags: Vec<String>,
     #[serde(rename = "installedSize")]
-    pub installed_size: String,
+    pub installed_size: i32,
     pub refs: CanisterPackageRefs
 }
 
