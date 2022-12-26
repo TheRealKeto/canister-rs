@@ -14,37 +14,30 @@ pub struct CanisterAPIResponse {
 }
 
 #[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct CanisterPackage {
     pub package: String,
-    #[serde(rename = "isCurrent")]
     pub is_current: bool,
-    #[serde(rename = "repositoryTier")]
     pub repository_tier: i32,
-    #[serde(rename = "repositorySlug")]
     pub repository_slug: String,
     pub price: String,
     pub version: String,
     pub architecture: String,
     pub filename: String,
     pub size: i32,
-    #[serde(rename = "sha256")]
-    pub sha_256: Option<String>,
+    pub sha256: Option<String>,
     pub name: Option<String>,
     pub description: String,
     pub author: Option<String>,
     pub maintainer: String,
     pub depiction: Option<String>,
-    #[serde(rename = "nativeDepiction")]
     pub native_depiction: Option<String>,
-    #[serde(rename = "sileoDepiction")]
     pub sileo_depiction: Option<String>,
     pub header: Option<String>,
-    #[serde(rename = "tintColor")]
-    pub color: Option<String>,
+    pub tint_color: Option<String>,
     pub icon: Option<String>,
     pub section: String,
     pub tags: Vec<String>,
-    #[serde(rename = "installedSize")]
     pub installed_size: i32,
     pub refs: CanisterPackageRefs
 }
@@ -55,10 +48,9 @@ pub struct CanisterPackageRepo {
 }
 
 #[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct CanisterResponseRefs {
-    #[serde(rename = "nextPage")]
     pub next_page: Option<String>,
-    #[serde(rename = "previousPage")]
     pub previous_page: Option<String>,
 }
 
