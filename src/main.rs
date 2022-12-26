@@ -2,7 +2,7 @@
 // Copyright (c) 2022, Keto (TheRealKeto)
 // SPDX-License-Identifier: BSD-3-Clause
 //
-use canister_rs::Canister;
+use canister::Canister;
 
 fn main() -> Result<(), reqwest::Error> {
     // Always make sure to include a user-agent!
