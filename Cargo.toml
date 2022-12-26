@@ -8,6 +8,7 @@ repository = "https://github.com/TheRealKeto/canister-rs"
 license = "BSD-3-Clause"
 
 [dependencies]
+maybe-async = "0.2.6"
 thiserror = "1.0.37"
 
 [dependencies.reqwest]
@@ -25,6 +26,6 @@ optional = true
 features = ["full"]
 
 [features]
-default  = ["blocking"]
+default = ["async"]
 async = ["reqwest", "tokio"]
-blocking = ["reqwest/blocking"]
+blocking = ["reqwest/blocking", "maybe-async/is_sync"]

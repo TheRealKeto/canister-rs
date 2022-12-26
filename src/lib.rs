@@ -5,9 +5,10 @@
 pub mod models;
 use models::CanisterAPIResponse;
 
-#[cfg(feature = "async")]
+// Select request client based on selected feature
+#[cfg(not(feature = "blocking"))]
 use reqwest::{header, Client};
-#[cfg(not(feature = "async"))]
+#[cfg(feature = "blocking")]
 use reqwest::{header, blocking::Client};
 
 #[derive(thiserror::Error, Debug)]
@@ -50,26 +51,7 @@ impl Canister {
         }
     }
 
-    #[cfg(not(feature = "async"))]
-    pub fn search_canister(
-        &self, endpoint: &str, query: &str
-    ) -> Result<CanisterAPIResponse, CanisterAPIError> {
-        let request_url = format!("{}/{}", BASE_URL, endpoint);
-        let response: CanisterAPIResponse = self.client
-            .get(request_url)
-            .header(header::USER_AGENT, &self.user_agent)
-            .query(&[("q", query)])
-            .send()?
-            .json()?;
-
-        match response.message.as_str() {
-            "200 Successful" => Ok(response),
-            _ => Err(self.map_response_err(response.message))
-        }
-    }
-
-    // Develop a differenet function for async support
-    #[cfg(feature = "async")]
+    #[maybe_async::maybe_async]
     pub async fn search_canister(
         &self, endpoint: &str, query: &str
     ) -> Result<CanisterAPIResponse, CanisterAPIError> {
