@@ -1,26 +1,39 @@
 # canister-rs
 
-An API wrapper for the Canister API, in Rust.
+An API wrapper for [Canister](https://canister.me/), written in Rust.
 
-**Note**: This is still a work in progress. Expect breaking
-changes.
+Capable of supporting both sync and async requests, the project
+should be capable of handling whatever meets your needs.
 
-## Examples
+**Warning**: There are no front-facing docs, as this is still a
+work in progress. Expect breaking changes.
 
-`canister-rs` comes with both a normal, synchronous client,
-as well as `async` support; whichever meets your needs!
+## Usage
 
-### Using the `async` client
+To start, add the crate to your project using Cargo. You might want
+to consider using the `--git` flag when adding the crate.
 
-Make sure to enable the `async` feature while installing
-the crate with cargo.
+    cargo add canister-rs
+
+By default, only async requests will be allowed when adding the
+crate to your project. Should you need a sync implementation,
+simply enable the `blocking` feature when adding the crate.
+
+    cargo add canister-rs --features blocking
+
+### Examples
+
+Once added, the project can be imported like any crate. The example
+below should provide a general idea on how to get started.
 
 ```rust
-use canister_rs::Canister;
+use canister::Canister;
 
+// Remove this macro when using sync implementation
 #[tokio::main]
 async fn main() -> Result<(), reqwest::Error> {
-    // Always make sure to include a user-agent!
+    // Look for packages matching the query, "siguza"
+    // Always make sure to include a user agent!
     let client = Canister::new("TheRealKeto/canister-rs");
     let data = client.search_canister("jailbreak/package/search", "siguza")
         .await?;
@@ -30,36 +43,8 @@ async fn main() -> Result<(), reqwest::Error> {
 }
 ```
 
-### Using the blocking/sync client
-
-```rust
-use canister_rs::Canister;
-
-fn main() -> Result<(), reqwest::Error> {
-    // Always make sure to include a user-agent!
-    let client = Canister::new("TheRealKeto/canister-rs");
-    let data = client.search_canister("jailbreak/package/search", "siguza");
-
-    println!("{:#?}", data);
-    Ok(())
-}
-```
-
-## Morale
-
-After writing `canister.py`, I decided I should put it to
-good use by creating a CLI for it. Many know about this and
-while I was able to do it, I did not like outcome.
-
-I quickly realized that I wanted a more portable approach,
-and my interest in Rust had strenghthen at the time, so
-what better way to learn a language that to re-create
-an old project.
-
-This is a much better approach, particularly for creating
-a CLI, as Rust is compiled down to an executable, rather
-than being compiled to bytecode & interpreted; it's also
-supported on every system imaginable.
+Keep in mind that the sync and async implementations are identical,
+apart from the `async/await` keywords.
 
 ## License
 
