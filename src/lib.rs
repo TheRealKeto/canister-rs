@@ -6,20 +6,22 @@ pub mod models;
 use models::CanisterAPIResponse;
 
 // Select request client based on selected feature
+use reqwest::header;
 #[cfg(not(feature = "blocking"))]
-use reqwest::{header, Client};
+use reqwest::Client;
 #[cfg(feature = "blocking")]
-use reqwest::{header, blocking::Client};
+use reqwest::blocking::Client;
 
 #[derive(thiserror::Error, Debug)]
-#[non_exhaustive]
 pub enum CanisterAPIError {
-    #[error("Failed fetching data")]
+    #[error("Could not complete request")]
     RequestFailed(#[from] reqwest::Error),
-    #[error("Bad request: {0}")]
-    BadRequest(&'static str),
-    #[error("Not found: {0}")]
-    NotFound(&'static str)
+    #[error("Could not fetch Canister data")]
+    BadRequest,
+    #[error("404, Data not found")]
+    NotFound,
+    #[error("Unknown error: {0}")]
+    UnknownError(String)
 }
 
 // Model of a Canister client
@@ -45,9 +47,9 @@ impl Canister {
     // Bad requests are pretty terrible on v1
     fn map_response_err(&self, code: String) -> CanisterAPIError {
         match code.as_str() {
-            "400 Bad Request" => CanisterAPIError::BadRequest("400: Bad request"),
-            "404 Not Found" => CanisterAPIError::NotFound("404: Not Found"),
-            _ => CanisterAPIError::BadRequest("Unknown error")
+            "400 Bad Request" => CanisterAPIError::BadRequest,
+            "404 Not Found" => CanisterAPIError::NotFound,
+            _ => CanisterAPIError::UnknownError(code)
         }
     }
 
