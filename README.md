@@ -21,20 +21,21 @@ simply enable the `blocking` feature when adding the crate.
 
     cargo add canister-rs --features blocking
 
+
 ### Examples
 
 Once added, the project can be imported like any crate. The example
 below should provide a general idea on how to get started.
 
 ```rust
-use canister::Canister;
+use canister::{Canister, CanisterAPIError};
 
 // Remove this macro when using sync implementation
 #[tokio::main]
-async fn main() -> Result<(), reqwest::Error> {
+async fn main() -> Result<(), CanisterAPIError> {
     // Look for packages matching the query, "siguza"
     // Always make sure to include a user agent!
-    let client = Canister::new("TheRealKeto/canister-rs");
+    let client = Canister::new();
     let data = client.search_canister("jailbreak/package/search", "siguza")
         .await?;
 
