@@ -31,16 +31,28 @@ pub struct Canister {
     user_agent: String,
 }
 
+// Get the current version of the project
+// Used within the user agent given to requests
+const VERSION: &str = env!("CARGO_PKG_VERSION");
+
 // Base URL of all Canister API requests
 const BASE_URL: &str = "https://api.canister.me/v2";
 
+impl Default for Canister {
+    fn default() -> Self {
+        // Provide a default client & user agent
+        Self {
+            client: Client::new(),
+            user_agent: format!("canister-rs/{}", VERSION)
+        }
+    }
+}
+
 impl Canister {
     // Creates a new instance of the client
-    pub fn new(user_agent: &str) -> Canister {
-        Canister {
-            client: Client::new(),
-            user_agent: user_agent.to_string(),
-        }
+    // A required user agent is already provided!
+    pub fn new() -> Self {
+        Self::default()
     }
 
     // Handle errors based on status codes
