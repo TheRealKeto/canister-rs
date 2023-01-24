@@ -80,7 +80,7 @@ impl Canister {
             .await?;
 
         match response.message.as_str() {
-            "200 Successful" => Ok(response),
+            "200 OK" => Ok(response),
             _ => Err(self.map_response_err(response.message))
         }
     }

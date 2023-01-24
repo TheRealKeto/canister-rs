@@ -16,8 +16,10 @@ pub struct CanisterAPIResponse {
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CanisterPackage {
+    pub uuid: String,
     pub package: String,
     pub is_current: bool,
+    pub is_pruned: bool,
     pub repository_tier: i32,
     pub repository_slug: String,
     pub price: String,
