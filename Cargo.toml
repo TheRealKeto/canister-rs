@@ -18,7 +18,7 @@ crate-type = ["lib"]
 maybe-async = "0.2.6"
 serde = { version = "1.0.150", features = ["derive"] }
 thiserror = "1.0.37"
-tokio = { version = "1.23.0", features = ["full"], optional = true }
+tokio = { version = "1.24.2", features = ["full"], optional = true }
 
 [dependencies.reqwest]
 version = "0.11.13"
