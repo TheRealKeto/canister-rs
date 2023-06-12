@@ -79,9 +79,9 @@ impl Canister {
             .json()
             .await?;
 
-        match response.message.as_str() {
+        match response.status.as_str() {
             "200 OK" => Ok(response),
-            _ => Err(self.map_response_err(response.message))
+            _ => Err(self.map_response_err(response.status))
         }
     }
 }

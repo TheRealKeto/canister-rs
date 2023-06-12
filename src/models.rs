@@ -6,11 +6,12 @@ use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 pub struct CanisterAPIResponse {
-    pub message: String,
+    pub status: String,
     pub date: String,
     pub refs: CanisterResponseRefs,
     pub count: i32,
-    pub data: Vec<CanisterPackage>
+    pub data: Vec<CanisterPackage>,
+    pub error: Option<String>
 }
 
 #[derive(Debug, Deserialize)]
