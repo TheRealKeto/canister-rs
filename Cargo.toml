@@ -1,13 +1,14 @@
 [package]
 name = "canister-rs"
 version = "1.0.0"
-authors = ["TheRealKeto <therealketo@gmail.com>"]
+authors = ["Keto <therealketo@gmail.com>"]
 edition = "2021"
-description = "A POC for an async wrapper for the Canister API"
+rust-version = "1.88"
+description = "POC async wrapper for the Canister API"
 readme = "README.md"
 repository = "https://github.com/TheRealKeto/canister-rs"
 license = "BSD-3-Clause"
-keywords = ["canister", "api", "wrapper"]
+keywords = ["canister", "api", "api-wrapper"]
 
 [lib]
 name = "canister"
@@ -15,13 +16,13 @@ path = "src/lib.rs"
 crate-type = ["lib"]
 
 [dependencies]
-maybe-async = "0.2.6"
-serde = { version = "1.0.150", features = ["derive"] }
-thiserror = "1.0.37"
+maybe-async = "0.2.10"
+serde = { version = "1.0.219", features = ["derive"] }
+thiserror = "2.0.12"
 tokio = { version = "1.24.2", features = ["full"], optional = true }
 
 [dependencies.reqwest]
-version = "0.11.13"
+version = "0.12.22"
 optional = true
 features = ["json", "blocking"]
 
