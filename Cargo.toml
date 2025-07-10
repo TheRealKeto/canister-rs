@@ -1,6 +1,6 @@
 [package]
 name = "canister-rs"
-version = "1.0.0"
+version = "1.1.0"
 authors = ["Keto <therealketo@gmail.com>"]
 edition = "2021"
 rust-version = "1.88"
@@ -14,6 +14,10 @@ keywords = ["canister", "api", "api-wrapper"]
 name = "canister"
 path = "src/lib.rs"
 crate-type = ["lib"]
+
+[[bin]]
+name = "canister"
+path = "src/main.rs"
 
 [dependencies]
 maybe-async = "0.2.10"

@@ -33,13 +33,13 @@ use canister::{Canister, CanisterAPIError};
 // Remove this macro when using sync implementation
 #[tokio::main]
 async fn main() -> Result<(), CanisterAPIError> {
-    // Look for packages matching the query, "siguza"
+    // Look for packages matching the query, "aemulo"
     // Always make sure to include a user agent!
     let client = Canister::new();
-    let data = client.search_canister("jailbreak/package/search", "siguza")
-        .await?;
+    let data = client.search_canister("jailbreak/package/search", "aemulo")
+        .await;
 
-    println!("{:#?}", data);
+    println!("{data:#?}");
     Ok(())
 }
 ```

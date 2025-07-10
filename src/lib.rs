@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2022, Keto (TheRealKeto)
+// Copyright (c) 2025 Keto
 // SPDX-License-Identifier: BSD-3-Clause
 //
 pub mod models;
@@ -36,14 +36,14 @@ pub struct Canister {
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 // Base URL of all Canister API requests
-const BASE_URL: &str = "https://api.canister.me/v2";
+const BASE_URL: &str = "https://api.tale.me/v4/canister-services";
 
 impl Default for Canister {
     fn default() -> Self {
         // Provide a default client & user agent
         Self {
             client: Client::new(),
-            user_agent: format!("canister-rs/{}", VERSION)
+            user_agent: format!("canister-rs/{VERSION}")
         }
     }
 }
@@ -69,7 +69,7 @@ impl Canister {
     pub async fn search_canister(
         &self, endpoint: &str, query: &str
     ) -> Result<CanisterAPIResponse, CanisterAPIError> {
-        let request_url = format!("{}/{}", BASE_URL, endpoint);
+        let request_url = format!("{BASE_URL}/{endpoint}");
         let response: CanisterAPIResponse = self.client
             .get(request_url)
             .header(header::USER_AGENT, &self.user_agent)
